@@ -1,18 +1,14 @@
-import { useState } from "react"
+import React from "react";
+import { Container } from '@mui/material';
+// ייבוא הקומפוננטה החדשה שמכילה את טופס הכניסה
+import Login from "./components/login";
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
   return (
-    <div
-      style={{
-        padding: 16
-      }}>
-      <h2>
-        Welcome arzuann
-      </h2>
-    </div>
-  )
+    <Container component="main"> 
+      <Login />
+    </Container>
+  );
 }
 
-export default IndexPopup
+export default IndexPopup;
