@@ -1,9 +1,10 @@
 import React from "react";
 import { Container } from '@mui/material';
-// ייבוא הקומפוננטה החדשה שמכילה את טופס הכניסה
 import Login from "./components/login";
 
 function IndexPopup() {
+  console.log("API URL:", process.env.PLASMO_PUBLIC_API_URL || "ENV NOT LOADED");
+
   return (
     <Container component="main"> 
       <Login />

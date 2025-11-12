@@ -80,9 +80,10 @@ const Login = () => {
 
     try {
       // Replace with your actual API endpoint
-      const API_ENDPOINT = 'YOUR_API_ENDPOINT_HERE';
 
-      const response = await fetch(API_ENDPOINT, {
+      const LOGIN_API = process.env.PLASMO_PUBLIC_API_URL + '/login';
+
+      const response = await fetch(LOGIN_API, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,6 +117,7 @@ const Login = () => {
     }
   };
 
+  
   return (
     <Box
       sx={{
