@@ -1,30 +1,31 @@
-import { Storage } from "@plasmohq/storage"
+import { type IAuthToken } from "./types" // אם יש קובץ types.ts נפרד
 
-const storage = new Storage()
-
-
-export interface IAuthToken {
-    access_token: string;
-    token_type: string;
-    username: string;
+const sendMessageToBackground = <T = any>(message: any): Promise<T> => {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage(message, (response) => {
+      resolve(response)
+    })
+  })
 }
 
-export const saveToken = async (tokenData: IAuthToken) => {
-    await storage.set("authToken", JSON.stringify(tokenData));
+export const saveToken = async (tokenData: IAuthToken): Promise<boolean> => {
+  const response = await sendMessageToBackground({
+    action: "saveToken",
+    token: tokenData,
+  })
+  return response?.success || false
 }
 
 export const getToken = async (): Promise<IAuthToken | null> => {
-    const data = await storage.get("authToken");
-    if (!data) return null;
-    try {
-        return JSON.parse(data) as IAuthToken;
-    } catch {
-        return null;
-    }
+  const response = await sendMessageToBackground({
+    action: "getToken",
+  })
+  return response?.success ? (response.token as IAuthToken) : null
 }
 
-export const removeToken = async () => {
-    await storage.remove("authToken");
+export const removeToken = async (): Promise<boolean> => {
+  const response = await sendMessageToBackground({
+    action: "removeToken",
+  })
+  return response?.success || false
 }
-
-export default storage;
