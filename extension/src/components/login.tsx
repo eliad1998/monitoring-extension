@@ -98,7 +98,7 @@ const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         // Assume successful login returns user data or a success token
         const token_data = await response.json();
         await saveToken(token_data);
-        onSuccess(token_data, formData.username); // קורא להורה עם האובייקט ושם המשתמש
+        onSuccess(token_data); // קורא להורה עם האובייקט ושם המשתמש
       } else {
         // Handle failed login attempts (e.g., wrong credentials, status 401)
         const errorData = await response.json();

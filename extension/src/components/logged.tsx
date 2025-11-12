@@ -22,10 +22,7 @@ const LoggedIn: React.FC<ILoggedInProps> = ({ username }) => {
       }}
     >
       <Typography component="h1" variant="h6" sx={{ mb: 2 }}>
-        Welcome, {username}!
-      </Typography>
-      <Typography variant="body2">
-        You are successfully logged in.
+        Welcome {username}!
       </Typography>
     </Box>
   );

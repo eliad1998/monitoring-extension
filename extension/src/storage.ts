@@ -6,6 +6,7 @@ const storage = new Storage()
 export interface IAuthToken {
     access_token: string;
     token_type: string;
+    username: string;
 }
 
 export const saveToken = async (tokenData: IAuthToken) => {

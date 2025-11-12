@@ -26,7 +26,7 @@ def login(login_request: LoginRequest, db: Session = Depends(get_monitoring_db))
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
     access_token = create_access_token(db_user.id, db_user.username, expires_delta=timedelta(minutes=20))
-    return LoginResponse(access_token=access_token)
+    return LoginResponse(username=login_request.username, access_token=access_token)
 
 
 @user_router.get("/list_users")

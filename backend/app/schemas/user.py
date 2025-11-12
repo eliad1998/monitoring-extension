@@ -1,12 +1,13 @@
 from pydantic import BaseModel
 
-# schema של בקשת login
+
 class LoginRequest(BaseModel):
     username: str
     password: str
 
-# schema של תגובה
+
 class LoginResponse(BaseModel):
+    username: str
     access_token: str
     token_type: str = "bearer"
 

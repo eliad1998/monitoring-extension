@@ -5,28 +5,26 @@ import LoggedIn from "./components/logged";
 import { getToken, saveToken, type IAuthToken } from "./storage";
 
 function IndexPopup() {
-  const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] = useState<string>("");
+  const [token, setToken] = useState<IAuthToken | null>(null);
 
-  // useEffect(() => {
-  //   getToken().then(storedToken => {
-  //     if (storedToken) {
-  //       setToken(storedToken);
-  //       setUsername("User");
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    getToken().then(storedToken => {
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    });
+  }, []);
 
-  const handleLoginSuccess = (token_data: IAuthToken, user: string) => {
-    console.log("whyyy");
-    console.log("Heree, received token:", token_data);
-    saveToken(token_data);
+  const handleLoginSuccess = (tokenData: IAuthToken) => {
+    console.log("Heree, received token:", tokenData);
+    saveToken(tokenData);
+    setToken(tokenData);
   };
 
   return (
     <Container component="main">
       {token ? (
-        <LoggedIn username={username} />
+        <LoggedIn username={token.username} />
       ) : (
         <Login onSuccess={handleLoginSuccess} />
       )}
