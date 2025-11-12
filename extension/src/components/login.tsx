@@ -1,23 +1,29 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box } from '@mui/material';
+import { saveToken } from "../storage"
 
 
 interface ILoginModel {
-  email: string;
+  username: string;
   password: string;
 }
 
 interface IFormErrors {
-  email?: string;
+  username?: string;
   password?: string;
   general?: string;
+}
+
+
+interface LoginProps {
+  onSuccess: (tokenData: any, username: string) => void;
 }
 
 const validateForm = (data: ILoginModel): IFormErrors => {
   const errors: IFormErrors = {};
 
-  if (!data.email.trim()) {
-    errors.email = "Email field is required.";
+  if (!data.username.trim()) {
+    errors.username = "Username field is required.";
   }
 
   if (!data.password.trim()) {
@@ -28,9 +34,9 @@ const validateForm = (data: ILoginModel): IFormErrors => {
 };
 
 
-const Login = () => {
+const Login: React.FC<LoginProps> = ({ onSuccess }) => {
   const [formData, setFormData] = useState<ILoginModel>({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -64,7 +70,7 @@ const Login = () => {
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevents page reload
 
-    // 1. Client-Side Validation
+    // Client-Side Validation
     const validationErrors = validateForm(formData);
     setErrors(validationErrors);
     setServerError(null); // Clear previous server error
@@ -75,13 +81,10 @@ const Login = () => {
       return; // Stops form submission
     }
 
-    // 2. API Submission Logic
     setIsLoading(true); // Start loading
 
     try {
-      // Replace with your actual API endpoint
-
-      const LOGIN_API = process.env.PLASMO_PUBLIC_API_URL + '/login';
+      const LOGIN_API = process.env.PLASMO_PUBLIC_API_URL + '/user/login';
 
       const response = await fetch(LOGIN_API, {
         method: 'POST',
@@ -91,14 +94,11 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      // Check if the response was successful (HTTP status 200-299)
       if (response.ok) {
         // Assume successful login returns user data or a success token
-        const data = await response.json();
-        console.log("Login Successful!", data);
-
-        // --- Add your success handling logic here (e.g., redirect, save token) ---
-
+        const token_data = await response.json();
+        await saveToken(token_data);
+        onSuccess(token_data, formData.username); // קורא להורה עם האובייקט ושם המשתמש
       } else {
         // Handle failed login attempts (e.g., wrong credentials, status 401)
         const errorData = await response.json();
@@ -150,19 +150,19 @@ const Login = () => {
           margin="dense"
           required
           fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          autoComplete="email"
+          id="username"
+          label="username"
+          name="username"
+          autoComplete="username"
           autoFocus
-          value={formData.email}
+          value={formData.username}
           onChange={handleInputChange}
           variant="outlined"
           size="small"
           // Disable while loading
           disabled={isLoading}
-          error={!!errors.email}
-          helperText={errors.email}
+          error={!!errors.username}
+          helperText={errors.username}
         />
         <TextField
           margin="dense"
