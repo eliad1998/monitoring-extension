@@ -21,7 +21,7 @@
     "@mui/material": "^7.3.5",
     "@plasmohq/parcel-resolver": "^0.14.2",
     "@plasmohq/storage": "^1.15.0",
-    "@types/chrome": "0.0.258",
+    "@types/chrome": "^0.0.258",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
@@ -33,8 +33,7 @@
       "https://*/*"
     ],
     "permissions": [
-      "webRequest",
-      "webRequestBlocking"
+      "webRequest"
     ]
   }
 }

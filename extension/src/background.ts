@@ -1,8 +1,11 @@
 export { }
+import { getToken, saveToken, type IAuthToken } from "./storage";
 
-declare const browser: typeof chrome;
+
+declare const browser: typeof chrome | undefined
 
 console.log("Background script running");
+
 
 const browserApi = (typeof chrome !== 'undefined' && chrome.runtime)
   ? chrome
