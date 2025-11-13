@@ -34,6 +34,7 @@ def get_users(db: Session = Depends(get_monitoring_db)):
     return db.query(DBUser).all()
 
 
+# TODO: Limit register only to admins
 @user_router.post("/register")
 def register(user_to_register: RegisterRequest, db: Session = Depends(get_monitoring_db)):
     existing_user = db.query(DBUser).filter(DBUser.username == user_to_register.username).first()

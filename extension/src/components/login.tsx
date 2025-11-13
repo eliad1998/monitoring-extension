@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box } from '@mui/material';
-import { saveToken } from "../storage"
+import { saveToken } from "../StorageApi"
 
 
 interface ILoginModel {
@@ -16,7 +16,7 @@ interface IFormErrors {
 
 
 interface LoginProps {
-  onSuccess: (tokenData: any, username: string) => void;
+  onSuccess: (tokenData: any) => void;
 }
 
 const validateForm = (data: ILoginModel): IFormErrors => {
@@ -98,7 +98,7 @@ const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         // Assume successful login returns user data or a success token
         const token_data = await response.json();
         await saveToken(token_data);
-        onSuccess(token_data); // קורא להורה עם האובייקט ושם המשתמש
+        onSuccess(token_data);
       } else {
         // Handle failed login attempts (e.g., wrong credentials, status 401)
         const errorData = await response.json();

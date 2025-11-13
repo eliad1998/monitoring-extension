@@ -2,10 +2,12 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from app.routers.monitoring import monitoring_router
 from app.routers.user import user_router
 
 app = FastAPI()
 app.include_router(user_router)
+app.include_router(monitoring_router)
 
 # FIXME: Check security issues
 app.add_middleware(

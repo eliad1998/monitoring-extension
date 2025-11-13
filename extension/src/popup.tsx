@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container } from "@mui/material";
 import Login from "./components/login";
 import LoggedIn from "./components/logged";
-import { getToken, saveToken } from "./storage";
+import { getToken, saveToken } from "./StorageApi";
 import { type IAuthToken } from "./types";
 
 function IndexPopup() {

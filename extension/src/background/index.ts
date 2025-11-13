@@ -1,11 +1,12 @@
-export { }
 import { setupStorageListener } from "./StorageListener"
-
-setupStorageListener();
+import { monitorWebRequestsForUser } from "./WebReqestListener"
 
 
 console.log("Background script running");
+setupStorageListener();
 
+const username = "a"; 
+monitorWebRequestsForUser(username);
 
 
 /**
